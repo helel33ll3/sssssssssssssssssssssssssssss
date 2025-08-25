@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UX Top Bar</title>
+  <style>
+    .ux-top-bar {
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(17,17,17,0.77);
+      color: #eaeaea;
+      font-size: 15px;
+      padding: 8px 18px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: none;
+      z-index: 100000;
+      overflow: hidden;
+    }
+    .ux-highlight {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(
+        90deg,
+        #ff0000,
+        #ff4d4d,
+        #ff8080,
+        #ffffff,
+        #ff8080,
+        #ff4d4d,
+        #ff0000
+      );
+      background-size: 400% 100%;
+      animation: uxBarMove 8s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes uxBarMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 400% 0; }
+    }
+    .ux-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .ux {
+      color: #ff1a1a;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-shadow: 0 0 6px #ff0000, 0 0 12px #ff0000;
+      margin-right: 4px;
+    }
+    .menu {
+      color: #fff;
+      font-weight: 600;
+    }
+    .sep {
+      opacity: 0.35;
+      color: #ff0000;
+    }
+    .time {
+      color: #fff;
+      font-family: Consolas, monospace;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ux-top-bar" id="ux-top-bar">
+    <div class="ux-highlight"></div>
+    <div class="ux-item"><span class="ux">UX</span><span class="menu">Menu</span></div>
+    <span class="sep">|</span>
+    <div class="ux-item time" id="ux-time">00:00</div>
+  </div>
+
+  <script>
+    function updateTime() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const el = document.getElementById('ux-time');
+      if (el) el.textContent = `${h}:${m}`;
+    }
+
+    updateTime();
+    setInterval(updateTime, 60000);
+  </script>
+</body>
+</html>
